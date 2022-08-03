@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+    <title>Calendar Utils</title>
+    <script>
+    // prevent forms from submitting
+    function preventFormSubmit() {
+      var forms = document.querySelectorAll('form');
+      for (var i = 0; i < forms.length; i++) {
+        forms[i].addEventListener('submit', function(event) { event.preventDefault(); });
+      }
+    }
+    window.addEventListener('load', preventFormSubmit);
+        
+    function onSuccess(output) {
+      var div = document.getElementById('output');
+      div.innerHTML = output;
+    }
+    
+    function onFailure(output) {
+      var div = document.getElementById('output');
+      div.innerHTML = '<span class="error">' + output + '</span>';
+    }
+    
+    function handleFormSubmit(formObject) {
+      var div = document.getElementById('output');
+      div.innerHTML = 'Running...';
+      console.log(formObject.id);
+      if (formObject.id == 'optionalEvents') {
+        google.script.run.withSuccessHandler(onSuccess).withFailureHandler(onFailure).processOptionalEventsForm(formObject);
+      } else if (formObject.id == 'installTrigger') {
+        google.script.run.withSuccessHandler(onSuccess).withFailureHandler(onFailure).installTriggerForm(formObject); 
+      } else if (formObject.id == 'vacationPrep') {
+        google.script.run.withSuccessHandler(onSuccess).withFailureHandler(onFailure).processVacationPrepForm(formObject); 
+      }
+    }    
+    </script>
+    <style>
+    body {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    footer {
+      margin-top: auto;
+    }
+    span.error {
+     color: red;
+    }
+    span.warning {
+      color: white;
+      background: red;
+    }
+    div.container {
+      border: 1px solid black;
+      border-radius: 5px;
+      background: rgba(0, 128, 0, 0.3);
+      padding: 10px 10px 10px 10px;
+    }
+    #output {
+      border-style: double;
+      width: 80vw;
+      min-height: 400px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Calendar Utils</h1>
+    <div id="optionalEventsContainer" class="container">
+    <h2>Nack Optional Meetings</h2>
+    <p>This will find all meetings with the specified word in the title and if you haven'd already accepted/nacked them it will nack them</p>
+    <form id="optionalEvents" onSubmit="handleFormSubmit(this)">
+      <label for="title">Title:</label>
+      <input name="title" type="text" value="optional" required />
+      
+      <label for="numWeeks">Number of weeks:</label>
+      <input name="numWeeks" type="number" value="1" required />
+      
+      <input type="submit" value="Run" />
+    </form>
+    <br />
+    <!--
+    <h3>Optional: install trigger to run script weekly</h3>
+    <form id="installTrigger" onSubmit="installTrigger(this)">
+      <label for="hour">Hour of day:</label>
+      <input name="hour" type="number" value="5" min="0" max="23" required />
+
+      <label for="day">Day of week:</label> 
+      <select name="day">
+        <option value="0">Sunday</option>
+        <option value="1" selected>Monday</option>
+        <option value="2">Tuesday</option>
+        <option value="3">Wednesday</option>
+        <option value="4">Thursday</option>
+        <option value="5">Friday</option>
+        <option value="6">Saturday</option>
+      </select>
+      <input type="submit" value="Install Trigger" />
+    </form>  
+    -->
+    </div>
+    <br />
+    <div id="vacationPrepContainer" class="container">
+    <h2>Vacation Prep</h2>
+    <p>This will will clear out your calendar from "Start date" to "End date", inclusive.</p>
+    <form id="vacationPrep" onSubmit="handleFormSubmit(this)">
+      <label for="startDate">Start date:</label>
+      <input name="startDate" type="date" required />
+      
+      <label for="endDate">End date:</label>
+      <input name="endDate" type="date" required />
+      
+      <label for="dryRun">Dry run:</label>
+      <select name="dryRun">
+        <option value="true" selected>True</option>
+        <option value="false"><span class="warning">False</span></option>
+      </select>
+      <input type="submit" value="Run" />
+      <br />
+      <p>Make a mistake?  You might be able to <a href="https://calendar.google.com/calendar/r/trash">Restore deleted events</a>.</p>
+    </form>
+    <br />
+    </div>
+    <hr />
+    <h2>Output</h2>
+    <div id="output">
+    </div>
+    <footer>
+      <hr />
+      <p><a href="https://script.google.com/d/158cejgtdAq2Vg9cpZkvjKvFTidqdUQw7uq-m6HeLKDcoYlbuZnghwTAS/edit">Source code</a></p>
+    </footer>
+  </body>
+</html>
+
+

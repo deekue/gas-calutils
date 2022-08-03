@@ -1,0 +1,12 @@
+{
+  "timeZone": "America/Los_Angeles",
+  "dependencies": {
+  },
+  "webapp": {
+    "access": "DOMAIN",
+    "executeAs": "USER_ACCESSING"
+  },
+  "exceptionLogging": "STACKDRIVER",
+  "oauthScopes": ["https://www.googleapis.com/auth/calendar.events", "https://www.googleapis.com/auth/calendar.readonly"],
+  "runtimeVersion": "V8"
+}
