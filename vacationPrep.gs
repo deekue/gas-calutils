@@ -20,6 +20,7 @@ vacationPrep.oooEvents = [
   'OOO',
   'OoO',
   'Out of Office',
+  'Out of office',
   ];
   
 vacationPrep.holidays = [
