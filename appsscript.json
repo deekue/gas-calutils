@@ -1,12 +1,22 @@
 {
   "timeZone": "America/Los_Angeles",
   "dependencies": {
+    "enabledAdvancedServices": [
+      {
+        "userSymbol": "Calendar",
+        "version": "v3",
+        "serviceId": "calendar"
+      }
+    ]
   },
   "webapp": {
-    "access": "DOMAIN",
-    "executeAs": "USER_ACCESSING"
+    "executeAs": "USER_ACCESSING",
+    "access": "DOMAIN"
   },
   "exceptionLogging": "STACKDRIVER",
-  "oauthScopes": ["https://www.googleapis.com/auth/calendar.events", "https://www.googleapis.com/auth/calendar.readonly"],
+  "oauthScopes": [
+    "https://www.googleapis.com/auth/calendar.events",
+    "https://www.googleapis.com/auth/calendar.readonly"
+  ],
   "runtimeVersion": "V8"
 }

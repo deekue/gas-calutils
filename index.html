@@ -71,6 +71,11 @@
     <h2>Nack Optional Meetings</h2>
     <p>This will find all meetings with the specified word in the title and if you haven't already accepted/nacked them it will nack them</p>
     <form id="optionalEvents" onSubmit="handleFormSubmit(this)">
+      <label for="calendar">Calendar</label>
+      <select name="calendar" class="calendar-select">
+        <option value="default" selected>Default</option>
+      </select>
+      <br />
       <label for="title">Title:</label>
       <input name="title" type="text" value="optional" required />
       
@@ -130,6 +135,18 @@
       <hr />
       <p><a href="https://script.google.com/d/158cejgtdAq2Vg9cpZkvjKvFTidqdUQw7uq-m6HeLKDcoYlbuZnghwTAS/edit">Source code</a></p>
     </footer>
+    <script>
+      function loadCalendars(calendars) {
+        var dropdowns = document.querySelectorAll('.calendar-select');
+        for (var i = 0; i < dropdowns.length; i++) {
+          for(key in calendars) {
+            dropdowns[i].options[dropdowns[i].options.length] = new Option(calendars[key], key);
+          }
+        }
+      }
+      google.script.run.withSuccessHandler(loadCalendars).withFailureHandler(onFailure).listCalendars(); 
+
+    </script>
   </body>
 </html>
 
